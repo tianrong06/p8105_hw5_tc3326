@@ -1,0 +1,10 @@
+---
+title: "p8105_hw5_tc3326"
+author: "KK Chen"
+date: "2024-11-15"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
