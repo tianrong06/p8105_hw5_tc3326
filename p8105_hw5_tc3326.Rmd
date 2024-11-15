@@ -113,7 +113,23 @@ print(homicides)
 6. lat and lon: The geographic coordinates (latitude and longitude) of the location where the homicide occurred.\
 7. disposition: The outcome status of the case (Closed by arrest or Closed without arrest or Open/No arrest).\
 
+### Create a city_state variable and Summarzie
+```{r}
+homicides <- homicides %>%
+  mutate(city_state = paste(city, state, sep = ", "))
 
+unsolved_dispositions <- c("Closed without arrest", "Open/No arrest")
+
+homicide_summary <- homicides %>%
+  group_by(city_state) %>%
+  summarize(
+    total_homicides = n(),
+    unsolved_homicides = sum(disposition %in% unsolved_dispositions)
+  ) %>%
+  ungroup()
+
+print(homicide_summary)
+```
 
 
 
