@@ -70,6 +70,39 @@ power_plot
 
 *As the effect size increases, the power of the test also increases. As the effect size grows (the difference between the true mean and the null hypothesis mean of 0 becomes larger), the test becomes more likely to reject the null hypothesis, resulting in higher power. Also, there is non-linear growth. The power rises substantially from μ=1 to μ=3. However, as μ approaches 5 and 6, the power begins to plateau near 1. This suggests that once the effect size is large enough, almost all tests reject the null hypothesis, reaching close to 100% power. 
 
+###  Plot: Average estimate of 𝜇̂ vs True value ofμ
+```{r}
+mean_estimates_plot <- sim_res_multiple_means %>%
+  group_by(true_mean) %>%
+  summarize(
+    avg_sample_mean = mean(simulation_output_sample_mean),
+    avg_sample_mean_rejected = mean(simulation_output_sample_mean[simulation_output_p_value < 0.05])
+  ) %>%
+  ggplot(aes(x = true_mean)) +
+  geom_line(aes(y = avg_sample_mean, color = "Average μ̂")) +
+  geom_line(aes(y = avg_sample_mean_rejected, color = "Average μ̂ Rejected Null")) +
+  labs(
+    title = "Average Estimate of μ̂ vs True Value of μ",
+    x = " True Value of (µ)",
+    y = "Average Estimate of μ̂",
+    color = "Estimate Type"
+  ) +
+  theme_minimal()
+
+mean_estimates_plot
+```
+
+* Yes, the sample average of μ̂ across tests where the null was rejected is approximately equal to the true value of μ, particularly for higher values of 
+μ. This alignment occurs because larger effect sizes reduce selection bias. Larger effect sizes make it easier to detect a true difference from zero, resulting in a higher proportion of samples where the null hypothesis is rejected (improve power of test).
+
+
+
+
+
+
+
+
+
 
 
 
