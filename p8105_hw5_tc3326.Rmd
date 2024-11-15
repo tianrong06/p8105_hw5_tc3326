@@ -131,10 +131,25 @@ homicide_summary <- homicides %>%
 print(homicide_summary)
 ```
 
+### Estimate Proportion of Unsolved Homicides in Baltimore, MD
+```{r}
+baltimore <- homicides %>%
+  filter(city == "Baltimore", state == "MD")
 
+total_homicides <- nrow(baltimore)
+unsolved_homicides <- sum(baltimore$disposition %in% unsolved_dispositions)
 
+prop_test_result <- prop.test(x = unsolved_homicides, n = total_homicides)
 
+tidy_prop_test <- broom::tidy(prop_test_result)
 
+estimated_proportion <- tidy_prop_test$estimate
+conf_int_lower <- tidy_prop_test$conf.low
+conf_int_upper <- tidy_prop_test$conf.high
+
+cat("Estimated Proportion of Unsolved Homicides in Baltimore, MD: ", estimated_proportion, "\n")
+cat("95% Confidence Interval: [", conf_int_lower, ", ", conf_int_upper, "]\n")
+```
 
 
 
