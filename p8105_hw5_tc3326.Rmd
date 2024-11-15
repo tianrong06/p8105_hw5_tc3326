@@ -67,7 +67,8 @@ power_plot <- sim_res_multiple_means %>%
 
 power_plot
 ```
-* As the effect size increases, the power of the test also increases. As the effect size grows (the difference between the true mean and the null hypothesis mean of 0 becomes larger), the test becomes more likely to reject the null hypothesis, resulting in higher power. Also, there is non-linear growth. The power rises substantially from μ=1 to μ=3. However, as μ approaches 5 and 6, the power begins to plateau near 1. This suggests that once the effect size is large enough, almost all tests reject the null hypothesis, reaching close to 100% power. 
+
+*As the effect size increases, the power of the test also increases. As the effect size grows (the difference between the true mean and the null hypothesis mean of 0 becomes larger), the test becomes more likely to reject the null hypothesis, resulting in higher power. Also, there is non-linear growth. The power rises substantially from μ=1 to μ=3. However, as μ approaches 5 and 6, the power begins to plateau near 1. This suggests that once the effect size is large enough, almost all tests reject the null hypothesis, reaching close to 100% power. 
 
 
 
