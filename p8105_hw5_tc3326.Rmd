@@ -95,6 +95,24 @@ mean_estimates_plot
 * Yes, the sample average of μ̂ across tests where the null was rejected is approximately equal to the true value of μ, particularly for higher values of 
 μ. This alignment occurs because larger effect sizes reduce selection bias. Larger effect sizes make it easier to detect a true difference from zero, resulting in a higher proportion of samples where the null hypothesis is rejected (improve power of test).
 
+# Problem 3
+### Describe the raw data
+```{r}
+homicides = read_csv("./data/homicide-data.csv")
+print(homicides)
+```
+
+* The dataset contains 52,179 rows and 12 columns. It provides detailed information about homicide cases in 50 large U.S. cities. Below is a description of each column:\
+1. uid: A unique identifier for each homicide case, formatted with a city code prefix. \
+2. reported_date: The date the homicide was reported, recorded as an 8-digit numeric value in the format YYYYMMDD \
+3. victim_last and victim_first: The last and first names of the victim.\
+4. victim_race: The racial or ethnic background of the victim.\
+5. victim_age: The age of the victim at the time of death.\
+6. victim_sex: The gender of the victim.\
+5. city and state: The city and state where the homicide occurred.\
+6. lat and lon: The geographic coordinates (latitude and longitude) of the location where the homicide occurred.\
+7. disposition: The outcome status of the case (Closed by arrest or Closed without arrest or Open/No arrest).\
+
 
 
 
