@@ -13,9 +13,9 @@ library(ggplot2)
 # Problem 2
 ### Set Parameters and Simulate Data
 ```{r}
-simulate_t_test = function(true_mean, sample_size = 30, std_dev = 5) {
+simulate_t_test = function(true_mean, sample_size = 30, std_dev = 5) 
+  {
   simulated_data = tibble(sample_values = rnorm(sample_size, true_mean, std_dev))
-  
   t_test_result = t.test(simulated_data$sample_values, mu = 0)
   cleaned_result = broom::tidy(t_test_result)
   
@@ -25,7 +25,7 @@ simulate_t_test = function(true_mean, sample_size = 30, std_dev = 5) {
   )
   
   return(result)
-}
+  }
 ```
 
 ```{r}
