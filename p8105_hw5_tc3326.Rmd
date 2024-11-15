@@ -154,6 +154,10 @@ cat("95% Confidence Interval: [", conf_int_lower, ", ", conf_int_upper, "]\n")
 
 ### Perform prop.test for Each City
 ```{r}
+homicides <- homicides %>%
+  mutate(city_state = paste(city, state, sep = ", ")) %>%
+  filter(city_state != "Tulsa, AL") 
+
 allcity_summary <- homicides %>%
   group_by(city_state) %>%
   summarize(
@@ -178,7 +182,7 @@ allcity_summary <- allcity_summary %>%
 ggplot(allcity_summary, aes(x = city_state, y = estimate)) +
   geom_point() +
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 1) +
-  coord_flip() +  # Flip coordinates for better readability
+  coord_flip() +  
   labs(
     title = "Estimates and CIs for Unsolved Homicides by City",
     x = "City",
