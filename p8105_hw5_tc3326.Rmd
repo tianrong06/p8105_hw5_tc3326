@@ -8,6 +8,7 @@ output: github_document
 ```{r setup, include = FALSE, message = FALSE}
 library(tidyverse)
 library(ggplot2)
+library(purrr)
 ```
 
 # Problem 2
@@ -151,6 +152,41 @@ cat("Estimated Proportion of Unsolved Homicides in Baltimore, MD: ", estimated_p
 cat("95% Confidence Interval: [", conf_int_lower, ", ", conf_int_upper, "]\n")
 ```
 
+### Perform prop.test for Each City
+```{r}
+allcity_summary <- homicides %>%
+  group_by(city_state) %>%
+  summarize(
+    total_homicides = n(),
+    unsolved_homicides = sum(disposition %in% unsolved_dispositions)
+  ) %>%
+  ungroup() %>%
+  mutate(
+    prop_test_result = map2(unsolved_homicides, total_homicides, ~ prop.test(x = .x, n = .y)),
+    tidy_result = map(prop_test_result, broom::tidy)
+  ) %>%
+  unnest(tidy_result) %>%
+  select(city_state, total_homicides, unsolved_homicides, estimate, conf.low, conf.high)
+```
+
+### Plot that shows the estimates and CIs for each city
+```{r}
+allcity_summary <- allcity_summary %>%
+  arrange(desc(estimate)) %>%
+  mutate(city_state = factor(city_state, levels = city_state))
+
+ggplot(allcity_summary, aes(x = city_state, y = estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 1) +
+  coord_flip() +  # Flip coordinates for better readability
+  labs(
+    title = "Estimates and CIs for Unsolved Homicides by City",
+    x = "City",
+    y = "Proportion of Unsolved Homicides"
+  ) +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 7))
+```
 
 
 
