@@ -11,6 +11,45 @@ library(ggplot2)
 library(purrr)
 ```
 
+# Problem 1
+### Write a function that checks for duplicate birthdays
+```{r}
+shared_birthday = function(n) {
+birthdays = sample(1:365, n, replace = TRUE)
+duplicate = any(duplicated(birthdays))
+  
+  return(duplicate)
+}
+```
+
+### Run this function 10000 times for each group size between 2 and 50; Compute probability
+```{r}
+bir_simulation_results = expand_grid(
+  group_size = 2:50,        
+  iteration = 1:10000       
+) %>%
+  mutate(has_duplicates = map_lgl(group_size, shared_birthday)) %>%  
+  group_by(group_size) %>%                                          
+  summarize(probability = mean(has_duplicates), .groups = "drop")   
+
+print(bir_simulation_results)
+```
+
+### Make a plot showing the probability as a function of group size
+```{r}
+ggplot(bir_simulation_results, aes(x = group_size, y = probability)) +
+  geom_line(color = "blue") +
+  geom_point(color = "red") +
+  labs(
+    title = "Probability of Shared Birthday as a Function of Group Size",
+    x = "Group Size (n)",
+    y = "Probability of Shared Birthday"
+  ) +
+  theme_minimal()
+```
+
+* The plot shows the birthday paradox. The probability of shared birthdays increases rapidly with group size increasing. At 23 people, the probability exceeds 50%. 
+
 # Problem 2
 ### Set Parameters and Simulate Data
 ```{r}
